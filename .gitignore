@@ -9,7 +9,7 @@ __pycache__/
 *.pyd
 
 # Chroma DB and other local data
-chroma_db/
+# chroma_db/
 data/
 
 # Logs
