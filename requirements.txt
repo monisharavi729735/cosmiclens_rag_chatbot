@@ -8,7 +8,7 @@ langchain-chroma==0.2.5
 langchain-openai==0.3.29
 langsmith==0.4.13
 chromadb==1.0.16
-langchain-google-genai==0.1.6
+langchain-google-genai==2.1.9
 google-auth==2.40.3
 pydantic==2.11.7
 pandas==2.3.1
