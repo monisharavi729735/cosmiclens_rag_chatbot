@@ -1,3 +1,4 @@
+from chromadb import EphemeralClient
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -102,11 +103,22 @@ llm = ChatGoogleGenerativeAI(
 
 embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-vector_store = Chroma(
-    collection_name="physics_textbook_collection",
-    embedding_function=embeddings_model,
-    persist_directory="chroma_db"
-)
+if os.environ.get("DEPLOY_ENV") == "render":
+    print("Using Ephemeral Chroma on Render")
+    client = EphemeralClient()
+    vector_store = Chroma(
+        client=client,
+        collection_name="physics_textbook_collection",
+        embedding_function=embeddings_model
+    )
+else:
+    print("Using Persistent Chroma locally")
+    vector_store = Chroma(
+        collection_name="physics_textbook_collection",
+        embedding_function=embeddings_model,
+        persist_directory="chroma_db"
+    )
+    
 retriever = vector_store.as_retriever(search_kwargs={'k': 5})
 
 # Main query handler
