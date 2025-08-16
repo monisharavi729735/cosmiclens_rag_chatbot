@@ -20,6 +20,6 @@ data/
 Thumbs.db
 
 # dev files
-chatbot.py
-ingest_database.py
-requirements_dev.txt
+# chatbot.py
+# ingest_database.py
+# requirements_dev.txt

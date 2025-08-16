@@ -99,12 +99,38 @@ llm = ChatGoogleGenerativeAI(
     google_api_key=google_api_key
 )
 
+'''
+# using this in an actual prod environment but I can't afford to do so now due to limited ram in free tier
 vector_store = Chroma(
     collection_name="physics_textbook_collection",
     persist_directory="chroma_db"
 )
 
 retriever = vector_store.as_retriever(search_kwargs={'k': 5})
+'''
+
+class DemoRetriever:
+    def __init__(self):
+        self.docs = [
+            "Newton's three laws explain how forces affect motion.",
+            "Energy can neither be created nor destroyed — only transformed.",
+            "Light behaves as both a wave and a particle depending on observation.",
+            "Einstein's theory of relativity shows that time and space are linked and affected by gravity.",
+            "Entropy is a measure of disorder; the second law of thermodynamics says it always increases in isolated systems.",
+            "Quantum mechanics introduces the concept of probability and uncertainty at very small scales.",
+            "Waves carry energy without transferring matter from one point to another.",
+            "The speed of light in vacuum is the universal speed limit — about 3x10^8 m/s.",
+            "Electricity and magnetism are unified as electromagnetism, one of the four fundamental forces.",
+            "Black holes are regions of spacetime where gravity is so strong that nothing can escape."
+        ]
+
+    def invoke(self, query: str):
+        return [
+            type("Doc", (), {"page_content": doc})
+            for doc in self.docs[:5]
+        ]
+
+retriever = DemoRetriever()
 
 @app.get("/")
 def root():
