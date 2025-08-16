@@ -7,7 +7,6 @@ import requests
 from dotenv import load_dotenv
 from difflib import SequenceMatcher
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
 # Load .env
@@ -100,11 +99,8 @@ llm = ChatGoogleGenerativeAI(
     google_api_key=google_api_key
 )
 
-embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-
 vector_store = Chroma(
     collection_name="physics_textbook_collection",
-    embedding_function=embeddings_model,
     persist_directory="chroma_db"
 )
 
